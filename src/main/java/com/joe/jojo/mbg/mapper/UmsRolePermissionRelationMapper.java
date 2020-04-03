@@ -1,10 +1,8 @@
 package com.joe.jojo.mbg.mapper;
 
-
-import java.util.List;
-
 import com.joe.jojo.mbg.model.UmsRolePermissionRelation;
 import com.joe.jojo.mbg.model.UmsRolePermissionRelationExample;
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface UmsRolePermissionRelationMapper {

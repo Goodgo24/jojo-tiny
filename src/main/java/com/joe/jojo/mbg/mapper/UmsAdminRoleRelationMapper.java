@@ -1,9 +1,8 @@
 package com.joe.jojo.mbg.mapper;
 
-import java.util.List;
-
 import com.joe.jojo.mbg.model.UmsAdminRoleRelation;
 import com.joe.jojo.mbg.model.UmsAdminRoleRelationExample;
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface UmsAdminRoleRelationMapper {
