@@ -1,5 +1,7 @@
 package com.joe.jojo.service;
 
+
+
 import com.joe.jojo.dto.UmsPermissionNode;
 import com.joe.jojo.mbg.model.UmsPermission;
 
@@ -7,11 +9,9 @@ import java.util.List;
 
 /**
  * 后台用户权限管理Service
- * @Author: Joe
- * @Date: 2020/4/3 0003 上午 10:26
+ * Created by macro on 2018/9/29.
  */
 public interface UmsPermissionService {
-
     /**
      * 添加权限
      */
@@ -20,7 +20,7 @@ public interface UmsPermissionService {
     /**
      * 修改权限
      */
-    int update(Long id,UmsPermission permission);
+    int update(Long id, UmsPermission permission);
 
     /**
      * 批量删除权限

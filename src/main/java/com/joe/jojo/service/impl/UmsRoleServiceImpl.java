@@ -1,21 +1,23 @@
 package com.joe.jojo.service.impl;
 
+
 import com.joe.jojo.dao.UmsRolePermissionRelationDao;
 import com.joe.jojo.mbg.mapper.UmsRoleMapper;
 import com.joe.jojo.mbg.mapper.UmsRolePermissionRelationMapper;
-import com.joe.jojo.mbg.model.UmsPermission;
-import com.joe.jojo.mbg.model.UmsRole;
-import com.joe.jojo.mbg.model.UmsRoleExample;
+import com.joe.jojo.mbg.model.*;
 import com.joe.jojo.service.UmsRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
- * @Author: Joe
- * @Date: 2020/4/3 0003 上午 10:21
+ * 后台角色管理Service实现类
+ * Created by macro on 2018/9/30.
  */
+@Service
 public class UmsRoleServiceImpl implements UmsRoleService {
     @Autowired
     private UmsRoleMapper roleMapper;
@@ -23,7 +25,6 @@ public class UmsRoleServiceImpl implements UmsRoleService {
     private UmsRolePermissionRelationMapper rolePermissionRelationMapper;
     @Autowired
     private UmsRolePermissionRelationDao rolePermissionRelationDao;
-
     @Override
     public int create(UmsRole role) {
         role.setCreateTime(new Date());
@@ -53,11 +54,23 @@ public class UmsRoleServiceImpl implements UmsRoleService {
 
     @Override
     public int updatePermission(Long roleId, List<Long> permissionIds) {
-        return 0;
+        //先删除原有关系
+        UmsRolePermissionRelationExample example=new UmsRolePermissionRelationExample();
+        example.createCriteria().andRoleIdEqualTo(roleId);
+        rolePermissionRelationMapper.deleteByExample(example);
+        //批量插入新关系
+        List<UmsRolePermissionRelation> relationList = new ArrayList<>();
+        for (Long permissionId : permissionIds) {
+            UmsRolePermissionRelation relation = new UmsRolePermissionRelation();
+            relation.setRoleId(roleId);
+            relation.setPermissionId(permissionId);
+            relationList.add(relation);
+        }
+        return rolePermissionRelationDao.insertList(relationList);
     }
 
     @Override
     public List<UmsRole> list() {
-        return null;
+        return roleMapper.selectByExample(new UmsRoleExample());
     }
 }

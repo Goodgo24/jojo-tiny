@@ -1,14 +1,14 @@
 package com.joe.jojo.mbg.mapper;
 
 
-import java.util.List;
-
 import com.joe.jojo.mbg.model.UmsAdmin;
 import com.joe.jojo.mbg.model.UmsAdminExample;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface UmsAdminMapper {
-    int countByExample(UmsAdminExample example);
+    long countByExample(UmsAdminExample example);
 
     int deleteByExample(UmsAdminExample example);
 

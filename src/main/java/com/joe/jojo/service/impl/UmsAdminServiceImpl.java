@@ -1,9 +1,9 @@
 package com.joe.jojo.service.impl;
 
-
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.PageHelper;
+
 import com.joe.jojo.common.utils.JwtTokenUtil;
 import com.joe.jojo.dao.UmsAdminPermissionRelationDao;
 import com.joe.jojo.dao.UmsAdminRoleRelationDao;
@@ -20,14 +20,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -76,6 +73,7 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         }
         return null;
     }
+
     @Override
     public UmsAdmin register(UmsAdminParam umsAdminParam) {
         UmsAdmin umsAdmin = new UmsAdmin();
@@ -108,7 +106,7 @@ public class UmsAdminServiceImpl implements UmsAdminService {
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
             token = jwtTokenUtil.generateToken(userDetails);
-//            updateLoginTimeByUsername(username);
+            updateLoginTimeByUsername(username);
             insertLoginLog(username);
         } catch (AuthenticationException e) {
             LOGGER.warn("登录异常:{}", e.getMessage());
@@ -116,21 +114,40 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         return token;
     }
 
+    /**
+     * 添加登录记录
+     * @param username 用户名
+     */
+    private void insertLoginLog(String username) {
+        UmsAdmin admin = getAdminByUsername(username);
+        UmsAdminLoginLog loginLog = new UmsAdminLoginLog();
+        loginLog.setAdminId(admin.getId());
+        loginLog.setCreateTime(new Date());
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
+        loginLog.setIp(request.getRemoteAddr());
+        loginLogMapper.insert(loginLog);
+    }
+
+    /**
+     * 根据用户名修改登录时间
+     */
+    private void updateLoginTimeByUsername(String username) {
+        UmsAdmin record = new UmsAdmin();
+        record.setLoginTime(new Date());
+        UmsAdminExample example = new UmsAdminExample();
+        example.createCriteria().andUsernameEqualTo(username);
+        adminMapper.updateByExampleSelective(record, example);
+    }
 
     @Override
-    public List<UmsPermission> getPermissionList(Long adminId) {
-        return adminRoleRelationDao.getPermissionList(adminId);
+    public String refreshToken(String oldToken) {
+        return jwtTokenUtil.refreshHeadToken(oldToken);
     }
 
     @Override
     public UmsAdmin getItem(Long id) {
         return adminMapper.selectByPrimaryKey(id);
-    }
-
-
-    @Override
-    public String refreshToken(String oldToken) {
-        return jwtTokenUtil.refreshToken(oldToken);
     }
 
     @Override
@@ -207,6 +224,25 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         return 0;
     }
 
+    /**
+     * 将+-权限关系转化为对象
+     */
+    private List<UmsAdminPermissionRelation> convert(Long adminId,Integer type,List<Long> permissionIdList) {
+        List<UmsAdminPermissionRelation> relationList = permissionIdList.stream().map(permissionId -> {
+            UmsAdminPermissionRelation relation = new UmsAdminPermissionRelation();
+            relation.setAdminId(adminId);
+            relation.setType(type);
+            relation.setPermissionId(permissionId);
+            return relation;
+        }).collect(Collectors.toList());
+        return relationList;
+    }
+
+    @Override
+    public List<UmsPermission> getPermissionList(Long adminId) {
+        return adminRoleRelationDao.getPermissionList(adminId);
+    }
+
     @Override
     public int updatePassword(UpdateAdminPasswordParam param) {
         if(StrUtil.isEmpty(param.getUsername())
@@ -230,7 +266,7 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) {
+    public UserDetails loadUserByUsername(String username){
         //获取用户信息
         UmsAdmin admin = getAdminByUsername(username);
         if (admin != null) {
@@ -240,33 +276,4 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         throw new UsernameNotFoundException("用户名或密码错误");
     }
 
-
-    /**
-     * 将+-权限关系转化为对象
-     */
-    private List<UmsAdminPermissionRelation> convert(Long adminId,Integer type,List<Long> permissionIdList) {
-        List<UmsAdminPermissionRelation> relationList = permissionIdList.stream().map(permissionId -> {
-            UmsAdminPermissionRelation relation = new UmsAdminPermissionRelation();
-            relation.setAdminId(adminId);
-            relation.setType(type);
-            relation.setPermissionId(permissionId);
-            return relation;
-        }).collect(Collectors.toList());
-        return relationList;
-    }
-
-    /**
-     * 添加登录记录
-     * @param username 用户名
-     */
-    private void insertLoginLog(String username) {
-        UmsAdmin admin = getAdminByUsername(username);
-        UmsAdminLoginLog loginLog = new UmsAdminLoginLog();
-        loginLog.setAdminId(admin.getId());
-        loginLog.setCreateTime(new Date());
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = attributes.getRequest();
-        loginLog.setIp(request.getRemoteAddr());
-        loginLogMapper.insert(loginLog);
-    }
 }

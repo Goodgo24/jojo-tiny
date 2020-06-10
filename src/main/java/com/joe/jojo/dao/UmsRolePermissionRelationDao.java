@@ -1,5 +1,6 @@
 package com.joe.jojo.dao;
 
+
 import com.joe.jojo.mbg.model.UmsPermission;
 import com.joe.jojo.mbg.model.UmsRolePermissionRelation;
 import org.apache.ibatis.annotations.Param;
@@ -7,11 +8,10 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * @Author: Joe
- * @Date: 2020/4/3 0003 下午 5:29
+ * 后台用户角色管理自定义Dao
+ * Created by macro on 2018/9/30.
  */
 public interface UmsRolePermissionRelationDao {
-
     /**
      * 批量插入角色和权限关系
      */

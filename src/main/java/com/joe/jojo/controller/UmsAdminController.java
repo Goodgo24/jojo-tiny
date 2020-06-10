@@ -19,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -53,7 +54,7 @@ public class UmsAdminController {
     @ApiOperation(value = "登录以后返回token")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult login(@RequestBody UmsAdminLoginParam umsAdminLoginParam, BindingResult result) {
+    public CommonResult login(@RequestBody UmsAdminLoginParam umsAdminLoginParam, BindingResult result, HttpServletResponse response) {
         String token = adminService.login(umsAdminLoginParam.getUsername(), umsAdminLoginParam.getPassword());
         if (token == null) {
             return CommonResult.validateFailed("用户名或密码错误");
@@ -61,6 +62,7 @@ public class UmsAdminController {
         Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("token", token);
         tokenMap.put("tokenHead", tokenHead);
+        //response.setHeader(tokenHeader,tokenHead+" "+token);
         return CommonResult.success(tokenMap);
     }
 
@@ -196,4 +198,7 @@ public class UmsAdminController {
         List<UmsPermission> permissionList = adminService.getPermissionList(adminId);
         return CommonResult.success(permissionList);
     }
+
+
+
 }

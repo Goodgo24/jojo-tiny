@@ -1,12 +1,14 @@
 package com.joe.jojo.mbg.mapper;
 
+
 import com.joe.jojo.mbg.model.UmsAdminRoleRelation;
 import com.joe.jojo.mbg.model.UmsAdminRoleRelationExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface UmsAdminRoleRelationMapper {
-    int countByExample(UmsAdminRoleRelationExample example);
+    long countByExample(UmsAdminRoleRelationExample example);
 
     int deleteByExample(UmsAdminRoleRelationExample example);
 

@@ -1,14 +1,14 @@
 package com.joe.jojo.mbg.mapper;
 
 
-import java.util.List;
-
 import com.joe.jojo.mbg.model.UmsPermission;
 import com.joe.jojo.mbg.model.UmsPermissionExample;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface UmsPermissionMapper {
-    int countByExample(UmsPermissionExample example);
+    long countByExample(UmsPermissionExample example);
 
     int deleteByExample(UmsPermissionExample example);
 

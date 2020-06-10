@@ -1,14 +1,14 @@
 package com.joe.jojo.mbg.mapper;
 
 
-import java.util.List;
-
 import com.joe.jojo.mbg.model.UmsRole;
 import com.joe.jojo.mbg.model.UmsRoleExample;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface UmsRoleMapper {
-    int countByExample(UmsRoleExample example);
+    long countByExample(UmsRoleExample example);
 
     int deleteByExample(UmsRoleExample example);
 

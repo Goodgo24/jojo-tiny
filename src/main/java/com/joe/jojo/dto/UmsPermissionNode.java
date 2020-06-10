@@ -1,18 +1,16 @@
 package com.joe.jojo.dto;
 
+
 import com.joe.jojo.mbg.model.UmsPermission;
 import lombok.Getter;
 import lombok.Setter;
 
-
 import java.util.List;
 
 /**
- * @Author: Joe
- * @Date: 2020/4/3 0003 上午 10:27
+ * Created by macro on 2018/9/30.
  */
 public class UmsPermissionNode extends UmsPermission {
-
     @Getter
     @Setter
     private List<UmsPermissionNode> children;

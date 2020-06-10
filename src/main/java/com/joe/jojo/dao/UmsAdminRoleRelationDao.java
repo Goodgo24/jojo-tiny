@@ -1,7 +1,6 @@
 package com.joe.jojo.dao;
 
 
-
 import com.joe.jojo.mbg.model.UmsAdminRoleRelation;
 import com.joe.jojo.mbg.model.UmsPermission;
 import com.joe.jojo.mbg.model.UmsRole;
@@ -14,7 +13,6 @@ import java.util.List;
  * Created by macro on 2018/10/8.
  */
 public interface UmsAdminRoleRelationDao {
-
     /**
      * 批量插入用户角色关系
      */

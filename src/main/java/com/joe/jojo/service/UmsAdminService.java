@@ -1,7 +1,6 @@
 package com.joe.jojo.service;
 
 
-
 import com.joe.jojo.dto.UmsAdminParam;
 import com.joe.jojo.dto.UpdateAdminPasswordParam;
 import com.joe.jojo.mbg.model.UmsAdmin;
@@ -33,7 +32,7 @@ public interface UmsAdminService {
      * @param password 密码
      * @return 生成的JWT的token
      */
-    String login(String username,String password);
+    String login(String username, String password);
 
     /**
      * 刷新token的功能
@@ -86,10 +85,12 @@ public interface UmsAdminService {
     /**
      * 修改密码
      */
-    int updatePassword(UpdateAdminPasswordParam param);
+    int updatePassword(UpdateAdminPasswordParam updatePasswordParam);
 
     /**
      * 获取用户信息
      */
     UserDetails loadUserByUsername(String username);
+
+
 }

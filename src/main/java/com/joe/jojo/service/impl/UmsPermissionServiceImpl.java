@@ -1,5 +1,6 @@
 package com.joe.jojo.service.impl;
 
+
 import com.joe.jojo.dto.UmsPermissionNode;
 import com.joe.jojo.mbg.mapper.UmsPermissionMapper;
 import com.joe.jojo.mbg.model.UmsPermission;
@@ -7,19 +8,20 @@ import com.joe.jojo.mbg.model.UmsPermissionExample;
 import com.joe.jojo.service.UmsPermissionService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @Author: Joe
- * @Date: 2020/4/3 0003 上午 10:30
+ * 后台用户权限管理Service实现类
+ * Created by macro on 2018/9/29.
  */
+@Service
 public class UmsPermissionServiceImpl implements UmsPermissionService {
     @Autowired
     private UmsPermissionMapper permissionMapper;
-
 
     @Override
     public int create(UmsPermission permission) {
@@ -52,7 +54,7 @@ public class UmsPermissionServiceImpl implements UmsPermissionService {
     }
 
     @Override
-    public List<UmsPermission> list()  {
+    public List<UmsPermission> list() {
         return permissionMapper.selectByExample(new UmsPermissionExample());
     }
 

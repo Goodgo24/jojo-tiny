@@ -1,12 +1,14 @@
 package com.joe.jojo.mbg.mapper;
 
+
 import com.joe.jojo.mbg.model.UmsAdminPermissionRelation;
 import com.joe.jojo.mbg.model.UmsAdminPermissionRelationExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface UmsAdminPermissionRelationMapper {
-    int countByExample(UmsAdminPermissionRelationExample example);
+    long countByExample(UmsAdminPermissionRelationExample example);
 
     int deleteByExample(UmsAdminPermissionRelationExample example);
 

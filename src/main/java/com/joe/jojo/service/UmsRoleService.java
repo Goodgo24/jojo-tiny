@@ -1,5 +1,6 @@
 package com.joe.jojo.service;
 
+
 import com.joe.jojo.mbg.model.UmsPermission;
 import com.joe.jojo.mbg.model.UmsRole;
 import org.springframework.transaction.annotation.Transactional;
@@ -7,9 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * 后台角色Service
- * @Author: Joe
- * @Date: 2020/4/2 0002 下午 5:29
+ * 后台角色管理Service
+ * Created by macro on 2018/9/30.
  */
 public interface UmsRoleService {
     /**
@@ -42,5 +42,4 @@ public interface UmsRoleService {
      * 获取角色列表
      */
     List<UmsRole> list();
-
 }
