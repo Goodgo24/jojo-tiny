@@ -23,4 +23,25 @@ public class PageController {
         return "index";
     }
 
+    @GetMapping(value="/welcome1")
+    public String welcomePage(){
+        return "example/welcome1";
+    }
+    @GetMapping(value="/admin-list")
+    public String adminListPage(){
+        return "example/admin-list";
+    }
+    @GetMapping(value="/admin-add")
+    public String adminAddPage(){
+        return "example/admin-add";
+    }
+    @GetMapping(value="/admin-edit")
+    public String adminEditPage(){
+        return "example/admin-edit";
+    }
+
+
+
+
+
 }

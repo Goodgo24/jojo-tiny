@@ -72,6 +72,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated();
         // 禁用缓存
         httpSecurity.headers().cacheControl();
+        //防止点击劫持 允许嵌入
+        httpSecurity.headers().frameOptions().disable();
         // 添加JWT filter
         httpSecurity.addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         //添加自定义未授权和未登录结果返回
@@ -102,6 +104,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             }
             throw new UsernameNotFoundException("用户名或密码错误");
         };
+
+
     }
 
     @Bean

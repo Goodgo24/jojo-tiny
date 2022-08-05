@@ -38,7 +38,6 @@
             //获取token
 
             function setToken(data){
-
                 var storage = window.localStorage;
 
                 if(!storage){
@@ -49,7 +48,7 @@
 
                 }
 
-                var token = data.access_token;
+                var token = data.token;
 
                 storage.setItem("user_token", token);
 
@@ -117,14 +116,13 @@
 
             }
             layui.use('form', function(){
+
               var form = layui.form;
               // layer.msg('玩命卖萌中', function(){
               //   //关闭后的操作
               //   });
               //监听提交
               form.on('submit(login)', function(data){
-                // alert(888)
-                  console.log(data);
                   $.ajax({
                       type:"POST",
                       url:"/admin/login",
@@ -132,9 +130,9 @@
                       data:JSON.stringify(data.field),
                       success:function(data2){
                          if(data2.code == 200){
-
-                             //location.href='index';
-                             alert("success");
+                             setToken(data);
+                             headerSetup(getToken());
+                             location.href='toIndex';
                          }
                       }
                   })
