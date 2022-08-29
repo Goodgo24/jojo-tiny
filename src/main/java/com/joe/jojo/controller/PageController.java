@@ -40,8 +40,20 @@ public class PageController {
         return "example/admin-edit";
     }
 
+    @GetMapping(value="/admin-role")
+    public String adminRolePage(){
+        return "example/admin-role";
+    }
 
+    @GetMapping(value="/admin-cate")
+    public String adminCatePage(){
+        return "example/admin-cate";
+    }
 
+    @GetMapping(value="/admin-rule")
+    public String adminRulePage(){
+        return "example/admin-rule";
+    }
 
 
 }

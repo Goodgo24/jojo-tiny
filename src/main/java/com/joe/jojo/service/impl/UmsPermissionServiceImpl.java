@@ -10,7 +10,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,7 +57,9 @@ public class UmsPermissionServiceImpl implements UmsPermissionService {
 
     @Override
     public List<UmsPermission> list() {
-        return permissionMapper.selectByExample(new UmsPermissionExample());
+       List<UmsPermission> list= new ArrayList<>();
+       list =permissionMapper.selectByExample(new UmsPermissionExample());
+        return list;
     }
 
     /**
